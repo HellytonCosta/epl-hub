@@ -5,7 +5,12 @@ const apiUrl = process.env.FOOTBALL_API_BASE_URL;
 
 
 export async function GET() {
-
+    if (!apiKey) {
+        return NextResponse.json(
+            { message: "API key is missing." },
+            { status: 500 }
+        );
+    }
     try {
         const response = await fetch(`${apiUrl}/standings`, {
             method: "GET",
