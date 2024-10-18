@@ -22,18 +22,20 @@ const StandingsTable = () => {
     }
   }, []);
 
-  if (!data) return;
+  // if (!data) return;
 
   return (
     <section className="p-10">
       <div className="max-w-3xl bg-opacity-70 bg-white mx-auto rounded-lg">
-        <Image
-          alt=""
-          src={data.competition.emblem}
-          width={100}
-          height={100}
-          className="bg-transparent mx-auto"
-        />
+        {data && (
+          <Image
+            alt=""
+            src={data.competition.emblem}
+            width={100}
+            height={100}
+            className="bg-transparent mx-auto"
+          />
+        )}
         <h1 className="py-2 -mt-7 text-center text-2xl uppercase items-center text-premier font-semibold">
           Standings
         </h1>
@@ -42,7 +44,7 @@ const StandingsTable = () => {
           <h3 className="grid-cols-1">Points</h3>
           <h3 className="grid-cols-1">MP</h3>
         </div>
-        {data.standings?.map((standings: Standings) =>
+        {data?.standings?.map((standings: Standings) =>
           standings?.table.map((item: StandingsPosition) => {
             console.log(standings);
 
@@ -59,7 +61,9 @@ const StandingsTable = () => {
                     height={30}
                     className=" text-center "
                   />
-                  <p className="flex-auto text-end items-center">{item.position}</p>
+                  <p className="flex-auto text-end items-center">
+                    {item.position}
+                  </p>
                 </div>
                 <h3 className="col-span-3">{item.team.name}</h3>
                 <h3 className="grid-cols-1">{item.points}</h3>

@@ -25,7 +25,7 @@ const TopScorers = () => {
     <section className="p-10">
       <div className="max-w-3xl px-10 py-5 bg-opacity-70 bg-white mx-auto rounded-lg">
         <h1 className="mb-4 text-center text-2xl uppercase text-premier font-semibold">
-          Scorers
+          Top Scorers
         </h1>
         <div className="grid grid-cols-6 items-center gap-2 bg-black bg-opacity-50 p-2 font-semibold">
           <Image
