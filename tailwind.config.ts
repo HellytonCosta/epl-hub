@@ -13,7 +13,12 @@ const config: Config = {
         foreground: "var(--foreground)",
         premier: "#37003C",
       },
+      fontFamily: {
+        'lato': ['Lato', 'sans-serif'],
+        'montserrat': ['Montserrat', 'sans-serif']
+      },
     },
+    
   },
   plugins: [],
 };

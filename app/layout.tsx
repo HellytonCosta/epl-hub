@@ -18,7 +18,8 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "EPL Hub",
   description: "English Premier League Standings",
-  icons: "",
+  icons: "/logos/trophy-1.svg",
+  creator: "HCS",
 };
 
 export default function RootLayout({

@@ -1,11 +1,20 @@
 import { Copyright } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const Footer = () => {
   return (
     <footer className=" w-full px-10 py-5 bg-premier text-white">
       <div className="grid grid-cols-4 gap-2 max-w-6xl mx-auto">
-        <div className="grid-cols-1">Future Logo</div>
+        <div className="grid-cols-1">
+        <Link href={"/"} className="flex-auto">
+          <div className="flex gap-4 items-center">
+            <Image alt="" src={"/logos/trophy-1.svg"} width={30} height={30} />
+            <h1 className="text-xl flex-auto font-montserrat">EPL Hub</h1>
+          </div>
+        </Link>
+        </div>
         <div className="grid-cols-1">
           <h3 className="text-xl text-gray-400 mb-3">EPL Hub</h3>
           <ul className="space-y-2">

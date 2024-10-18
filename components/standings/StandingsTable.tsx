@@ -1,6 +1,7 @@
 "use client";
 
 import { StandingsPosition, Standings, StandingsReponse } from "@/types/types";
+import { TableProperties } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
@@ -22,24 +23,16 @@ const StandingsTable = () => {
     }
   }, []);
 
-   if (!data) return;
+  if (!data) return;
 
   return (
-    <section className="p-10">
-      <div className="max-w-3xl bg-opacity-70 bg-white mx-auto rounded-lg">
-        {data && (
-          <Image
-            alt=""
-            src={data.competition.emblem}
-            width={100}
-            height={100}
-            className="bg-transparent mx-auto"
-          />
-        )}
-        <h1 className="py-2 -mt-7 text-center text-2xl uppercase items-center text-premier font-semibold">
+    <section className="font-lato">
+      <div className="max-w-2xl bg-opacity-70 bg-white mx-auto rounded-lg">
+        <h1 className="py-2 text-center text-2xl justify-center uppercase items-center flex gap-2 text-premier font-bold">
+          <TableProperties size-5 />
           Standings
         </h1>
-        <div className="grid grid-cols-6 items-center gap-2 bg-premier py-2 font-semibold">
+        <div className="grid grid-cols-6 text-xl max-lg:text-base items-center gap-2 bg-premier py-2 font-semibold">
           <h3 className="col-span-3 col-start-2">Team</h3>
           <h3 className="grid-cols-1">Points</h3>
           <h3 className="grid-cols-1">MP</h3>
@@ -47,25 +40,34 @@ const StandingsTable = () => {
         {data?.standings?.map((standings: Standings) =>
           standings?.table.map((item: StandingsPosition) => {
             console.log(standings);
-
+            const clZone: boolean = item.position <= 4;
+            const relegationZone: boolean = item.position >= 18;
             return (
               <div
                 key={item.team.id}
-                className="grid grid-cols-6 items-center gap-2 bg-black bg-opacity-40 hover:bg-opacity-50 py-2"
+                className={
+                  (clZone
+                    ? `bg-green-900 text-green-100`
+                    : relegationZone
+                    ? "bg-red-800 text-red-100"
+                    : "") +
+                  ` grid grid-cols-6 text-lg max-lg:text-base items-center gap-2 bg-black bg-opacity-50 hover:bg-opacity-70 py-3`
+                }
               >
-                <div className="flex gap-2 grid-cols-1 px-2">
+                <div className="flex gap-2 grid-cols-1 justify-center content-center">
                   <Image
                     alt=""
                     src={item.team.crest}
-                    width={30}
-                    height={30}
-                    className=" text-center "
+                    width={35}
+                    height={35}
+                    className=" flex-none max-lg:size-5 mt-1 justify-end"
                   />
-                  <p className="flex-auto text-end items-center">
+                  <p className="flex-none mr-1 text-end content-center">
                     {item.position}
                   </p>
                 </div>
-                <h3 className="col-span-3">{item.team.name}</h3>
+                <h3 className="col-span-3 max-lg:hidden">{item.team.name}</h3>
+                <h3 className="col-span-3 hidden max-lg:block">{item.team.shortName}</h3>
                 <h3 className="grid-cols-1">{item.points}</h3>
                 <h3 className="grid-cols-1">{item.playedGames}</h3>
               </div>

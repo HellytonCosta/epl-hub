@@ -4,16 +4,16 @@ import React from "react";
 
 const Header = () => {
   return (
-    <header className="min-h-10  bg-premier px-10 py-4">
+    <header className="min-h-10 font-lato bg-premier px-10 py-4">
       <div className="flex justify-center gap-1 items-center max-w-[1400px] mx-auto">
         <Link href={"/"} className="flex-auto">
-          <div className="flex gap-4 items-center">
+          <div className="flex max-lg:justify-center gap-4 items-center">
             <Image alt="" src={"/logos/trophy-1.svg"} width={30} height={30} />
-            <h1 className="text-xl flex-auto">EPL Hub</h1>
+            <h1 className="text-xl flex-auto max-lg:flex-none font-montserrat">EPL Hub</h1>
           </div>
         </Link>
-        <div className="flex-auto">
-          <ul className="flex justify-center gap-10">
+        <div className="flex-auto max-lg:hidden">
+          <ul className="flex justify-center text-xl gap-10">
             <Link href={"/standings"}>
               <li>Standings</li>
             </Link>
@@ -25,7 +25,7 @@ const Header = () => {
             </Link>
           </ul>
         </div>
-        <div className="flex-auto text-end">PL</div>
+        <div className="flex-auto text-end max-lg:hidden">PL</div>
       </div>
     </header>
   );
