@@ -39,7 +39,7 @@ const StandingsTable = () => {
         </div>
         {data?.standings?.map((standings: Standings) =>
           standings?.table.map((item: StandingsPosition) => {
-            console.log(standings);
+            
             const clZone: boolean = item.position <= 4;
             const relegationZone: boolean = item.position >= 18;
             return (

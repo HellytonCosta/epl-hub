@@ -1,4 +1,3 @@
-
 import Matches from "@/components/standings/Matches";
 import StandingsTable from "@/components/standings/StandingsTable";
 import TopScorers from "@/components/standings/TopScorers";
@@ -14,7 +13,9 @@ export default function Home() {
       >
         <div className="flex my-10 gap-2 px-20 font-lato max-w-[1500px] mx-auto max-xl:flex-col">
           <div className="flex-1 content-center my-10">
-            <h1 className="text-7xl uppercase font-lato max-xl:text-2xl font-semibold max-xl:text-center">Welcome Lads!</h1>
+            <h1 className="text-7xl uppercase font-lato max-xl:text-2xl font-semibold max-xl:text-center">
+              Welcome Lads!
+            </h1>
             <p className="text-start text-xl max-lg:hidden">
               Here, you find the standings, general info e much more about the
               EPL.
@@ -33,7 +34,7 @@ export default function Home() {
       <div className="grid grid-cols-2 gap-2 py-10 max-xl:grid-cols-1">
         <StandingsTable />
         <div className="space-y-10 max-xl:my-10">
-          <Matches /> 
+          <Matches />
           <TopScorers />
         </div>
       </div>
