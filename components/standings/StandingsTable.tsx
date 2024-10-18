@@ -22,7 +22,7 @@ const StandingsTable = () => {
     }
   }, []);
 
-  // if (!data) return;
+   if (!data) return;
 
   return (
     <section className="p-10">

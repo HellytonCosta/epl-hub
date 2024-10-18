@@ -1,9 +1,12 @@
 import axios from 'axios';
 
+const apiKey = process.env.FOOTBALL_API_KEY;
+const apiUrl = process.env.FOOTBALL_API_BASE_URL;
+
 const axiosInstance = axios.create({
-  baseURL: 'https://api.football-data.org/v4/competitions/PL', 
+  baseURL: apiUrl, 
   headers: {
-    'x-auth-token': `f66c03af1ad643e0bc10ad9610310bbc`,
+    'x-auth-token': apiKey,
     'Content-Type': 'application/json'
   },
 });

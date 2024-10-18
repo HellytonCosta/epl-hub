@@ -1,8 +1,6 @@
 "use client";
 import TopScorers from "@/components/standings/TopScorers";
-import { Scorer, ScorerRequest } from "@/types/types";
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 const Page = () => {
   
