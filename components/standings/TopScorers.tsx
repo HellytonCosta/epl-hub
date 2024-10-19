@@ -24,7 +24,7 @@ const TopScorers = () => {
   console.log(data);
   return (
     <section className="font-lato">
-      <div className="max-w-2xl bg-opacity-70 bg-white mx-auto rounded-lg">
+      <div className="max-w-4xl bg-opacity-70 bg-white mx-auto rounded-lg">
         <h1 className="py-2 text-center text-2xl justify-center uppercase items-center flex gap-2 text-premier font-semibold">
           <TableProperties size-5 />
           Top Scorers

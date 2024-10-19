@@ -27,7 +27,7 @@ const StandingsTable = () => {
 
   return (
     <section className="font-lato">
-      <div className="max-w-2xl bg-opacity-70 bg-white mx-auto rounded-lg">
+      <div className="max-w-2xl bg-opacity-70 bg-white max-[1920px]:mx-auto ml-auto rounded-lg ">
         <h1 className="py-2 text-center text-2xl justify-center uppercase items-center flex gap-2 text-premier font-bold">
           <TableProperties size-5 />
           Standings
@@ -54,15 +54,15 @@ const StandingsTable = () => {
                   ` grid grid-cols-6 text-lg max-lg:text-base items-center gap-2 bg-black bg-opacity-50 hover:bg-opacity-70 py-3`
                 }
               >
-                <div className="flex gap-2 grid-cols-1 justify-center content-center">
+                <div className="flex gap-4 grid-cols-1 justify-center max-lg:justify-end max-lg:gap-1.5 content-center">
                   <Image
                     alt=""
                     src={item.team.crest}
                     width={35}
                     height={35}
-                    className=" flex-none max-lg:size-5 mt-1 justify-end"
+                    className="flex-none max-lg:size-5 mt-1 justify-end"
                   />
-                  <p className="flex-none mr-1 text-end content-center">
+                  <p className="flex-none text-end content-center">
                     {item.position}
                   </p>
                 </div>

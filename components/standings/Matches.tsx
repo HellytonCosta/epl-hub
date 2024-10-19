@@ -57,8 +57,8 @@ const Matches = () => {
   }, [matchDay, searchMatchday]);
 
   return (
-    <section className=" font-lato">
-      <div className="max-w-2xl bg-opacity-70 bg-white mx-auto rounded-lg">
+    <section className="font-lato">
+      <div className="max-w-4xl bg-opacity-70 bg-white mx-auto rounded-lg">
         <h1 className="py-2 text-center text-2xl justify-center uppercase items-center flex gap-2 text-premier font-semibold">
           <LandPlot size-5 />
           Matches

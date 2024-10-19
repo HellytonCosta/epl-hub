@@ -17,6 +17,10 @@ const config: Config = {
         'lato': ['Lato', 'sans-serif'],
         'montserrat': ['Montserrat', 'sans-serif']
       },
+      width: {
+        'teste': '1920px',
+      },
+      
     },
     
   },
