@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -9,7 +10,9 @@ const Header = () => {
         <Link href={"/"} className="flex-auto">
           <div className="flex max-lg:justify-center gap-4 items-center">
             <Image alt="" src={"/logos/trophy-1.svg"} width={30} height={30} />
-            <h1 className="text-xl flex-auto max-lg:flex-none font-montserrat">EPL Hub</h1>
+            <h1 className="text-xl flex-auto max-lg:flex-none font-montserrat">
+              EPL Hub
+            </h1>
           </div>
         </Link>
         <div className="flex-auto max-lg:hidden">
@@ -25,7 +28,9 @@ const Header = () => {
             </Link>
           </ul>
         </div>
-        <div className="flex-auto text-end max-lg:hidden">PL</div>
+        <div className="flex-auto text-end max-lg:hidden">
+          <Link href={"/signIn"}>Sign In</Link>
+        </div>
       </div>
     </header>
   );
