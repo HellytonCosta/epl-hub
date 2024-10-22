@@ -2,8 +2,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-
-const Header = () => {
+import { options } from "@/app/api/auth/[...nextauth]/options";
+import { getServerSession } from "next-auth";
+// eslint-disable-next-line @next/next/no-async-client-component
+const Header = async () => {
+  const session = await getServerSession(options);
   return (
     <header className="min-h-10 font-lato bg-premier px-10 py-4">
       <div className="flex justify-center gap-1 items-center max-w-[1400px] mx-auto">
@@ -29,7 +32,16 @@ const Header = () => {
           </ul>
         </div>
         <div className="flex-auto text-end max-lg:hidden">
-          <Link href={"/signIn"}>Sign In</Link>
+          {!session && (
+            <>
+              <Link href={"/signIn"}>Sign In</Link>
+            </>
+          )}
+          {session && (
+            <>
+              <Link href={"/profile"}>Go to your profile</Link>
+            </>
+          )}
         </div>
       </div>
     </header>

@@ -29,7 +29,7 @@ const StandingsTable = () => {
     <section className="font-lato">
       <div className="max-w-2xl bg-opacity-70 bg-white max-[1920px]:mx-auto ml-auto rounded-lg ">
         <h1 className="py-2 text-center text-2xl justify-center uppercase items-center flex gap-2 text-premier font-bold">
-          <TableProperties size-5 />
+          <TableProperties className="size-5" />
           Standings
         </h1>
         <div className="grid grid-cols-6 text-xl max-lg:text-base items-center gap-2 bg-premier py-2 font-semibold">
@@ -39,7 +39,6 @@ const StandingsTable = () => {
         </div>
         {data?.standings?.map((standings: Standings) =>
           standings?.table.map((item: StandingsPosition) => {
-            
             const clZone: boolean = item.position <= 4;
             const relegationZone: boolean = item.position >= 18;
             return (
@@ -67,7 +66,9 @@ const StandingsTable = () => {
                   </p>
                 </div>
                 <h3 className="col-span-3 max-lg:hidden">{item.team.name}</h3>
-                <h3 className="col-span-3 hidden max-lg:block">{item.team.shortName}</h3>
+                <h3 className="col-span-3 hidden max-lg:block">
+                  {item.team.shortName}
+                </h3>
                 <h3 className="grid-cols-1">{item.points}</h3>
                 <h3 className="grid-cols-1">{item.playedGames}</h3>
               </div>

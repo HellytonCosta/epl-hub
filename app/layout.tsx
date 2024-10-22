@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/global/header";
 import Footer from "@/components/global/footer";
+import AuthProvider from "@/context/AuthProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -32,16 +33,18 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} bg-white antialiased`}
       >
-        <Header />
-        <main
-          className="min-h-svh "
-          style={{
-            backgroundImage: "url('/images/football-pitch.jpg')",
-          }}
-        >
-          {children}
-        </main>
-        <Footer />
+        <AuthProvider>
+          <Header />
+          <main
+            className="min-h-svh "
+            style={{
+              backgroundImage: "url('/images/football-pitch.jpg')",
+            }}
+          >
+            {children}
+          </main>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

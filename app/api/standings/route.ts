@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
-const apiKey = process.env.FOOTBALL_API_KEY;
-const apiUrl = process.env.FOOTBALL_API_BASE_URL;
+const apiKey = process.env.FOOTBALL_API_KEY!;
+const apiUrl = process.env.FOOTBALL_API_BASE_URL!;
 
 
 export async function GET() {
