@@ -6,11 +6,9 @@ import React, { useEffect, useState } from "react";
 
 const Matches = () => {
   const [matchesData, setMatchesData] = useState<CompetitionMatches>();
-  const [matchDay] = useState("2");
 
   const [currentMatchday, setCurrentMatchday] = useState<number>();
   const [selectedMatchDay, setSelectedMatchDay] = useState<number>();
-  const [searchMatchday, setSearchMatchday] = useState<string>();
 
   useEffect(() => {
     try {
@@ -19,33 +17,33 @@ const Matches = () => {
 
         const data = await request.json();
         setCurrentMatchday(data.response.season.currentMatchday);
-        if (!searchMatchday) {
-          setSearchMatchday(currentMatchday?.toString());
-          setSelectedMatchDay(currentMatchday);
-        }
+        setSelectedMatchDay(currentMatchday);
       };
 
       result();
     } catch (error) {
       console.error("Something went wrong: ", error);
     }
-  }, [currentMatchday, searchMatchday, selectedMatchDay]);
+  }, [currentMatchday]);
 
   const handlePreviousMatchday = () => {
-    const sub = selectedMatchDay! - 1;
-    setSelectedMatchDay(sub);
-    setSearchMatchday(sub.toString());
+    if (selectedMatchDay! >= 2) {
+      const sub = selectedMatchDay! - 1;
+      setSelectedMatchDay(sub);
+    }
   };
+
   const handleNextMatchday = () => {
-    const sub = selectedMatchDay! + 1;
-    setSelectedMatchDay(sub);
-    setSearchMatchday(sub.toString());
+    if (selectedMatchDay! < 37) {
+      const sub = selectedMatchDay! + 1;
+      setSelectedMatchDay(sub);
+    }
   };
 
   useEffect(() => {
     const fetchMatches = async () => {
       try {
-        const response = await fetch(`/api/matches?matchday=${searchMatchday}`);
+        const response = await fetch(`/api/matches`);
         const data = await response.json();
         setMatchesData(data);
       } catch (error) {
@@ -54,7 +52,7 @@ const Matches = () => {
     };
 
     fetchMatches();
-  }, [matchDay, searchMatchday]);
+  }, []);
 
   return (
     <section className="font-lato">
@@ -70,7 +68,7 @@ const Matches = () => {
             onClick={handlePreviousMatchday}
           />
           <h3 className="text-center py-2 flex-auto text-xl">
-            Gameday {searchMatchday}
+            Gameday {selectedMatchDay}
           </h3>
           <SkipForward
             className="flex-none cursor-pointer hover:text-purple-300"
@@ -78,47 +76,48 @@ const Matches = () => {
           />
         </div>
         {matchesData?.matches.map((match: Match) => {
-          return (
-            <div
-              key={match.id}
-              className="flex gap-2 justify-center py-1.5  bg-black hover:bg-opacity-70 bg-opacity-50"
-            >
-              <div className="flex-1 flex gap-4">
-                <p className="flex-auto content-center text-end max-lg:hidden">
-                  {match.homeTeam.name}
+          if (match.matchday === selectedMatchDay) {
+            return (
+              <div
+                key={match.id}
+                className="flex gap-2 justify-center py-1.5  bg-black hover:bg-opacity-70 bg-opacity-50"
+              >
+                <div className="flex-1 flex gap-4">
+                  <p className="flex-auto content-center text-end max-lg:hidden">
+                    {match.homeTeam.name}
+                  </p>
+                  <p className="flex-auto content-center text-end hidden max-lg:block">
+                    {match.homeTeam.tla}
+                  </p>
+                  <Image
+                    alt="Home Team Crest"
+                    src={match.homeTeam.crest}
+                    width={30}
+                    height={10}
+                    className="flex-none py-2 size-auto"
+                  />
+                </div>
+                <p className="flex-none text-xl bg-premi content-center mx-3">
+                  {match.score.fullTime.home} x {match.score.fullTime.away}
                 </p>
-                <p className="flex-auto content-center text-end hidden max-lg:block">
-                  {match.homeTeam.tla}
-                </p>
-                <Image
-                  alt="Home Team Crest"
-                  src={match.homeTeam.crest}
-                  width={30}
-                  height={10}
-                  className="flex-none py-2 size-auto"
-                />
+                <div className="flex flex-1 gap-4">
+                  <Image
+                    alt="Home Team Crest"
+                    src={match.awayTeam.crest}
+                    width={30}
+                    height={30}
+                    className="flex-none py-2"
+                  />
+                  <p className="flex-auto text-start content-center max-lg:hidden">
+                    {match.awayTeam.name}
+                  </p>
+                  <p className="flex-auto text-start content-center hidden max-lg:block">
+                    {match.awayTeam.tla}
+                  </p>
+                </div>
               </div>
-              <p className="flex-none text-xl bg-premi content-center mx-3">
-                {match.score.fullTime.home} x {match.score.fullTime.away}
-              </p>
-              <div className="flex flex-1 gap-4">
-                <Image
-                  alt="Home Team Crest"
-                  src={match.awayTeam.crest}
-                  width={30}
-                  height={30}
-                  className="flex-none py-2"
-                />
-                <p className="flex-auto text-start content-center max-lg:hidden">
-                  {match.awayTeam.name}
-                </p>
-                <p className="flex-auto text-start content-center hidden max-lg:block">
-                  {match.awayTeam.tla}
-                </p>
-              </div>
-              {/* <p className="flex-1">{match.awayTeam.name}</p> */}
-            </div>
-          );
+            );
+          }
         })}
       </div>
     </section>

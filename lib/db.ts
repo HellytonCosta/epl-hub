@@ -13,5 +13,3 @@ const prisma = globalThis.prismaGlobal ?? prismaClientSingleton()
 export default prisma
 
 if (process.env.NODE_ENV !== 'production') globalThis.prismaGlobal = prisma
-
-// https://www.youtube.com/watch?v=QXxy8Uv1LnQ

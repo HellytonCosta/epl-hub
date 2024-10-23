@@ -21,7 +21,7 @@ const TopScorers = () => {
       console.error("Something went wrong: ", error);
     }
   }, []);
-  console.log(data);
+  
   return (
     <section className="font-lato">
       <div className="max-w-4xl bg-opacity-70 bg-white mx-auto rounded-lg">

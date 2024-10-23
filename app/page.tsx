@@ -16,12 +16,12 @@ export default function Home() {
             <h1 className="text-7xl uppercase font-serif max-xl:text-2xl font-semibold max-xl:text-center">
               Welcome Lads!
             </h1>
-            <p className="text-start text-xl max-lg:hidden">
+            <p className="text-start text-xl max-xl:hidden">
               This is the our, yours, EPL Hub.
             </p>
           </div>
           <div className="flex-1 content-center">
-            <p className="max-w-lg text-end text-2xl mr-0  ml-auto max-xl:text-center">
+            <p className="max-w-lg text-end text-2xl mr-0 ml-auto max-xl:mx-auto max-xl:text-center">
               Explore the latest Premier League standings and statistics in
               real-time. This is an open-source project, built by fans for fans.
               Dive into the data, track your favorite teams, and enjoy the

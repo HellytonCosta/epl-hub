@@ -1,3 +1,4 @@
+"use client";
 import StandingsTable from "@/components/standings/StandingsTable";
 import React from "react";
 
