@@ -1,12 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { options } from "@/app/api/auth/[...nextauth]/options";
-import { getServerSession } from "next-auth";
+import { validateRequest } from "@/constants/actions/user.action";
 
 // eslint-disable-next-line @next/next/no-async-client-component
 const Header = async () => {
-  const session = await getServerSession(options);
+  // const session = await getServerSession(options);
+
+  const session = await validateRequest();
+  console.log(session);
 
   return (
     <header className="min-h-10 font-lato bg-premier px-10 py-4">
@@ -42,7 +44,7 @@ const Header = async () => {
           )}
           {session && (
             <>
-              <Link href={"/profile"}></Link>
+              <Link href={"/profile"}>{session.username}</Link>
             </>
           )}
         </div>

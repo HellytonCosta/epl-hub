@@ -13,6 +13,7 @@ export async function POST(req: Request) {
           email,
           username,
           password: hashedPassword,
+
         },
       });
       console.log(user);
@@ -20,7 +21,8 @@ export async function POST(req: Request) {
 
     } catch (error) {
       console.error(error);
-      return NextResponse.json({error: "User creation failed" }, {status: 500}) 
+      console.log(error);
+      return NextResponse.json({error: "User creation failed" + error }, {status: 500}) 
       
     }
 

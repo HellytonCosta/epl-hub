@@ -9,3 +9,11 @@ export const userSignUpSchema = z.object({
     message: "Passwords don't match",
     path: ["confirm"]
 });
+
+export const userSignInSchema = z.object({
+    username: z.string(),
+    password: z.string(),
+})
+
+export type SignUpValues = z.infer<typeof userSignUpSchema>;
+export type SignInValues = z.infer<typeof userSignInSchema>;

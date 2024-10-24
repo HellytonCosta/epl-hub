@@ -1,11 +1,33 @@
+"use client";
+import { signIn } from "@/constants/actions/user.action";
+import { userSignInSchema } from "@/schemas/user";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { GitCommit, Mail } from "lucide-react";
-import React from "react";
-
-
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 // eslint-disable-next-line @next/next/no-async-client-component
-const Page = async () => {
-  //   const users = await prisma.user.findMany();
+const Page = () => {
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<z.infer<typeof userSignInSchema>>({
+    resolver: zodResolver(userSignInSchema),
+  });
+
+  const onSubmit = async (data: z.infer<typeof userSignInSchema>) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    signIn(data).then((data: any) => {
+      setError(data?.error);
+      setSuccess(data?.success);
+    });
+  };
+  
 
   return (
     <section className="bg-black/50 h-screen content-center px-10 ">
@@ -30,18 +52,28 @@ const Page = async () => {
           <p className="text-premier flex-none">OR</p>
           <hr className="border border-premier mt-2.5 flex-auto" />
         </div>
-        <input
-          placeholder="Email or Username"
-          className="p-1.5 rounded-md border max-w-72 w-full mx-auto  block border-premier"
-        ></input>
-        <input
-          placeholder="Password"
-          type="password"
-          className="max-w-72 w-full rounded-md p-1.5 border mx-auto block  border-premier"
-        ></input>
-        <button type="submit" className="flex gap-2 font-lato bg-premier text-white py-2 mx-auto w-full max-w-72 rounded-md justify-center ">
-          SUBMIT
-        </button>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <input
+            {...register("username")}
+            placeholder="Email or Username"
+            className="p-1.5 rounded-md border max-w-72 w-full mx-auto  block border-premier"
+          ></input>
+          <input
+            {...register("password")}
+            placeholder="Password"
+            type="password"
+            className="max-w-72 w-full rounded-md p-1.5 border mx-auto block  border-premier"
+          ></input>
+          {errors.password && <p>{errors.password.message}</p>}
+          <button
+            type="submit"
+            className="flex gap-2 font-lato bg-premier text-white py-2 mx-auto w-full max-w-72 rounded-md justify-center "
+          >
+            SUBMIT
+          </button>
+          {error && <p>{error}</p>}
+          {success && <p>{success}</p>}
+        </form>
       </div>
     </section>
   );

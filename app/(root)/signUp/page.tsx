@@ -1,10 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { userSignUpSchema } from "@/schemas/user";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { signUp } from "@/constants/actions/user.action";
 
 const Page = () => {
   const {
@@ -15,25 +16,16 @@ const Page = () => {
     resolver: zodResolver(userSignUpSchema),
   });
 
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
+
   const onSubmit = async (data: z.infer<typeof userSignUpSchema>) => {
 
-    try {
-      const response = await fetch('/api/users/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-      if (!response.ok) {
-        throw new Error('User creation failed');
-      }
-
-      const user = await response.json();
-      console.log("User Created", user);
-    } catch (error) {
-      console.error(error);
-    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    signUp(data).then((data: any) => {
+      setError(data?.error);
+      setSuccess(data?.success);
+    });
   };
   return (
     <section className="bg-black/50 h-screen content-center px-10 ">
@@ -80,6 +72,8 @@ const Page = () => {
           >
             CREATE ACCOUNT
           </button>
+          {error && <p>{error}</p>}
+          {success && <p>{success}</p>}
         </form>
       </div>
     </section>

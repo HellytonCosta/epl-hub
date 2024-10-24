@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 
 const Matches = () => {
   const [matchesData, setMatchesData] = useState<CompetitionMatches>();
-
   const [currentMatchday, setCurrentMatchday] = useState<number>();
   const [selectedMatchDay, setSelectedMatchDay] = useState<number>();
 

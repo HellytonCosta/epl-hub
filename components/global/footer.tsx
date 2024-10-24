@@ -64,8 +64,17 @@ const Footer = () => {
       </div>
       <hr className="my-6 px-32 max-w-6xl mx-auto border-gray-400" />
       <p className="flex gap-2 mt-4 items-center justify-center">
+        <Link
+          href={
+            "https://tlo.mit.edu/researchers-mit-community/protect/software-open-source-protection"
+          }
+          target="_blank"
+          className="text-purple-300"
+        >
+          MIT License - Copyright
+        </Link>
         <Copyright className="size-4" />
-        2024 - All rights reserved.
+        2024 - HCS
       </p>
     </footer>
   );
