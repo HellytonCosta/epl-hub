@@ -5,6 +5,7 @@ import Header from "@/components/global/header";
 import Footer from "@/components/global/footer";
 import AuthProvider from "@/context/AuthProvider";
 
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -28,6 +29,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <body

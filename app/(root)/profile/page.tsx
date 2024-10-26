@@ -1,16 +1,28 @@
+"use client";
 import SignOutButton from "@/components/global/SignOut";
 import { validateRequest } from "@/constants/actions/user.action";
+import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 // eslint-disable-next-line @next/next/no-async-client-component
-const Page = async () => {
-  const session = await validateRequest();
+const Page = () => {
+  // const session = await validateRequest();
+  const [session, setSession] = useState<any>();
+  const { data } = useSession();
 
-  if (!session) {
+  useEffect(() => {
+    const fetchSessionData = async () => {
+      const session = await validateRequest();
+      setSession(session);
+    };
+
+    fetchSessionData();
+  }, [data]);
+
+  if (!session && !data) {
     return redirect("/");
   }
-
   return (
     <section className="bg-black/50 min-h-screen content-center">
       <div className="mx-auto max-w-xl rounded-md bg-white p-4 text-black">

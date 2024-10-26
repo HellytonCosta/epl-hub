@@ -1,14 +1,27 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { validateRequest } from "@/constants/actions/user.action";
+import { useSession } from "next-auth/react";
 
 // eslint-disable-next-line @next/next/no-async-client-component
-const Header = async () => {
-  // const session = await getServerSession(options);
+const Header = () => {
+  const { data } = useSession();
+const sessionAuth = data;
+  const [ session, setSession] = useState<unknown>();
 
-  const session = await validateRequest();
-  console.log(session);
+  useEffect(() => {
+    const fetchSessionData = async () => {
+      const session = await validateRequest();
+      setSession(session);
+    };
+
+    fetchSessionData();
+  }, []);
+
+
+  console.log("-->" + sessionAuth?.user?.email);
 
   return (
     <header className="min-h-10 font-lato bg-premier px-10 py-4">
@@ -35,18 +48,20 @@ const Header = async () => {
           </ul>
         </div>
         <div className="flex-none text-end max-lg:hidden">
-          {!session && (
+          {!session && !sessionAuth && (
             <div className="flex gap-2">
               <Link href={"/signIn"}>Sign In</Link>
               <p className="mx-2">/</p>
               <Link href={"/signUp"}>Sign Up</Link>
             </div>
           )}
-          {session && (
+          {(session || sessionAuth) && (
             <>
-              <Link href={"/profile"}>{session.username}</Link>
+              <Link href={"/profile"}>{session?.username}</Link>
+              <Link href={"/profile"}>{sessionAuth?.user?.name}</Link>
             </>
           )}
+          
         </div>
       </div>
     </header>

@@ -6,9 +6,12 @@ import { GitCommit, Mail } from "lucide-react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useSession, signIn as SignIn } from "next-auth/react";
 
 // eslint-disable-next-line @next/next/no-async-client-component
 const Page = () => {
+  const { data } = useSession();
+
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
 
@@ -27,23 +30,28 @@ const Page = () => {
       setSuccess(data?.success);
     });
   };
-  
 
   return (
     <section className="bg-black/50 h-screen content-center px-10 ">
       <div className="bg-white/80 max-w-xl min-h-96 mx-auto text-black rounded-md p-10 space-y-2">
         <div className="mb-4">
           <h1 className="text-3xl font-semibold font-lato text-center">
-            Welcome back!
+            Welcome back! {data?.user?.email}
           </h1>
           <p className="text-center">Enter your credentials to sign in.</p>
         </div>
 
-        <button className="flex gap-2 bg-premier text-white py-2 mx-auto w-full max-w-72 rounded-md justify-center ">
+        <button
+          className="flex gap-2 bg-premier text-white py-2 mx-auto w-full max-w-72 rounded-md justify-center "
+          // onClick={() => SignIn("github")}
+        >
           <Mail />
           Log in with Google
         </button>
-        <button className="flex gap-2 bg-premier text-white py-2 mx-auto w-full max-w-72 rounded-md justify-center ">
+        <button
+          className="flex gap-2 bg-premier text-white py-2 mx-auto w-full max-w-72 rounded-md justify-center "
+          onClick={() => SignIn("github")}
+        >
           <GitCommit />
           Log in with GitHub
         </button>
@@ -68,6 +76,7 @@ const Page = () => {
           <button
             type="submit"
             className="flex gap-2 font-lato bg-premier text-white py-2 mx-auto w-full max-w-72 rounded-md justify-center "
+            onClick={() => SignIn()}
           >
             SUBMIT
           </button>
