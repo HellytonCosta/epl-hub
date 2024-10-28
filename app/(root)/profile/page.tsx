@@ -8,6 +8,7 @@ import React, { useEffect, useState } from "react";
 // eslint-disable-next-line @next/next/no-async-client-component
 const Page = () => {
   // const session = await validateRequest();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [session, setSession] = useState<any>();
   const { data } = useSession();
 

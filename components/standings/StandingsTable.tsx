@@ -41,6 +41,7 @@ const StandingsTable = () => {
           standings?.table.map((item: StandingsPosition) => {
             const clZone: boolean = item.position <= 4;
             const relegationZone: boolean = item.position >= 18;
+    
             return (
               <div
                 key={item.team.id}

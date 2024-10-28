@@ -33,7 +33,7 @@ const Matches = () => {
   };
 
   const handleNextMatchday = () => {
-    if (selectedMatchDay! < 37) {
+    if (selectedMatchDay! < 38) {
       const sub = selectedMatchDay! + 1;
       setSelectedMatchDay(sub);
     }

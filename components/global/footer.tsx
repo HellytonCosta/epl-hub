@@ -66,7 +66,7 @@ const Footer = () => {
       <p className="flex gap-2 mt-4 items-center justify-center">
         <Link
           href={
-            "https://tlo.mit.edu/researchers-mit-community/protect/software-open-source-protection"
+            "https://opensource.org/license/MIT"
           }
           target="_blank"
           className="text-purple-300"

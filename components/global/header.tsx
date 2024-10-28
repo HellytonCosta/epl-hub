@@ -9,7 +9,8 @@ import { useSession } from "next-auth/react";
 const Header = () => {
   const { data } = useSession();
 const sessionAuth = data;
-  const [ session, setSession] = useState<unknown>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [ session, setSession] = useState<any>();
 
   useEffect(() => {
     const fetchSessionData = async () => {
