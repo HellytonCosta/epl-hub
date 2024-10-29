@@ -1,17 +1,24 @@
 "use client";
-import { signIn } from "@/constants/actions/user.action";
+import { signIn, validateSession } from "@/constants/actions/user.action";
 import { userSignInSchema } from "@/schemas/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GitCommit, Mail } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useSession, signIn as SignIn } from "next-auth/react";
 
+
 // eslint-disable-next-line @next/next/no-async-client-component
 const Page = () => {
   const { data } = useSession();
-
+  // validating data
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [authSession, setAuthSession] = useState<any>();
+  
+  if(data) {
+    setAuthSession(data);
+  }
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
 
@@ -30,6 +37,16 @@ const Page = () => {
       setSuccess(data?.success);
     });
   };
+
+  useEffect(() => {
+    const fetchSession = async () => {
+      const session = await validateSession(authSession);
+      console.log(data);
+      return session;
+    }
+
+    fetchSession();
+  }, [])
 
   return (
     <section className="bg-black/50 h-screen content-center px-10 ">

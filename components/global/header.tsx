@@ -2,27 +2,28 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { validateRequest } from "@/constants/actions/user.action";
+import { validateSession } from "@/constants/actions/user.action";
 import { useSession } from "next-auth/react";
 
 // eslint-disable-next-line @next/next/no-async-client-component
 const Header = () => {
   const { data } = useSession();
-const sessionAuth = data;
+  const sessionAuth = data;
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [ session, setSession] = useState<any>();
+  const [session, setSession] = useState<any>();
 
   useEffect(() => {
     const fetchSessionData = async () => {
-      const session = await validateRequest();
+      const session = await validateSession();
+      console.log(session?.user);
       setSession(session);
     };
 
     fetchSessionData();
   }, []);
 
-
-  console.log("-->" + sessionAuth?.user?.email);
+  // console.log("-->" + sessionAuth?.user?.email);
 
   return (
     <header className="min-h-10 font-lato bg-premier px-10 py-4">
@@ -62,7 +63,6 @@ const sessionAuth = data;
               <Link href={"/profile"}>{sessionAuth?.user?.name}</Link>
             </>
           )}
-          
         </div>
       </div>
     </header>

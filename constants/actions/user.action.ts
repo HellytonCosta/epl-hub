@@ -76,7 +76,6 @@ export const signIn = async (
         const existingUser = await prisma.user.findFirst({
             where: {
                 OR: [
-                    // { email },
                     { username }
                 ]
             }
@@ -103,7 +102,7 @@ export const signIn = async (
             // secure: true, 
           });
 
-        return redirect('');
+        // return redirect('');
 
     } catch (error) {
         console.error(error);   
@@ -116,35 +115,95 @@ export const SignOut = async () => {
         maxAge, 
         path: '/',
         httpOnly: true,
-        // secure: true, 
+        secure: true, 
       });
-
+    cookies().delete("sessionId");
+    /**
+     * @TODO perhaps it has to be removed permanently.
+     */
     return redirect("/");
+    
 }
 
-export const validateRequest = async () => {
-    const oldCookies = cookies().get('sessionId')
-    const userId: number = Number(oldCookies?.value.toString());
-    
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const validateSession = async (sessionAuth?: any) => {
+    const sessionId = Number(cookies().get('sessionId')?.value.toString())
+    // const sessionAuth = await getServerSession(options);
+
+    // const authSessionToken = cookies().get('next-auth.session-token')
+    console.log(sessionId);
+    console.log("next auth session: " + sessionAuth)
+
+
+    /**
+     * @TODO 1 - when you call the method, pull both sessions OK 
+     * @TODO 2 - If the session is from next auth, return an user.
+     * @TODO 3 - If the email from that user is already used, linked the session to the account.
+     * @TODO 4 - 
+     */
+
     try {
-        if(userId){
+        // IN CASE OF THE USER IS NOT CREATED ALREADY
+        if(sessionAuth){
+            const user = await prisma.user.findFirst({
+                where: 
+                {
+                    email: sessionAuth?.user?.email?.toString()
+                }
+            })
+            if(!user){
+                const newUser = await prisma.user.create({
+                    data: {
+                        email: String(sessionAuth.user?.email?.toString()),
+                        password: "",
+                        username: String(sessionAuth.user?.name),
+                    }
+                })
+                
+                const session = await prisma.session.create({
+                    data: {
+                        expiresAt: new Date(Date.now() + 30 * 24 * 60 * 1000),
+                        userId: newUser.id,
+                    }
+                })
+                
+                return {newUser , session};
+            }
+
+        }
+
+        if(sessionId){
 
             const session = await prisma.session.findFirst({
-                where: {
-                    id: userId,
+                where:    
+                {
+                    id: sessionId,
                 }
             })
-            
+    
+
             const user = await prisma.user.findFirst({
                 where: {
-                    id: session?.userId
+                    OR: [
+                        {
+                            id: session?.userId
+                        },
+                        {
+                            email: sessionAuth?.user?.email?.toString()
+                        }
+                    ]
                 }
             })
             
-            return user;
+            return {user, session};
         }
+
         
     } catch (error) {
         console.error(error);
     }
+}
+
+export const validatePage = async () => {
+
 }

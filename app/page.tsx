@@ -1,8 +1,22 @@
+"use client";
 import Matches from "@/components/standings/Matches";
 import StandingsTable from "@/components/standings/StandingsTable";
 import TopScorers from "@/components/standings/TopScorers";
+import { validateSession } from "@/constants/actions/user.action";
+import { useEffect } from "react";
 
 export default function Home() {
+
+  useEffect(() => {
+    const fetchSession = async () => {
+      const session = await validateSession()
+
+      console.log(session);
+    }
+
+    fetchSession();
+  }, [])
+
   return (
     <div className="p-10 bg-opacity-30 bg-black">
       <div
