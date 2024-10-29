@@ -16,7 +16,7 @@ const Header = () => {
   useEffect(() => {
     const fetchSessionData = async () => {
       const session = await validateSession();
-      console.log(session?.user);
+
       setSession(session);
     };
 

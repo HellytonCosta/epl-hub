@@ -23,7 +23,7 @@ const SignOutButton = () => {
 
   return (
     <button
-      className="bg-premier p-2 text-white mx-auto my-2"
+      className="bg-premier p-2 text-white mr-0 my-2"
       onClick={handleSignOut}
     >
       Sign Out

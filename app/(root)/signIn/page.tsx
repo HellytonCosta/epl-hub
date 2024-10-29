@@ -93,7 +93,7 @@ const Page = () => {
           <button
             type="submit"
             className="flex gap-2 font-lato bg-premier text-white py-2 mx-auto w-full max-w-72 rounded-md justify-center "
-            onClick={() => SignIn()}
+            onClick={() => SignIn("credentials")}
           >
             SUBMIT
           </button>

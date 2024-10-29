@@ -7,10 +7,10 @@ import { redirect } from "next/navigation";
 
 export const signUp = async (
     credentials: SignUpValues,
-  ) => {
+) => {
 
-    try {        
-        const { email, password, username} = userSignUpSchema.parse(credentials);
+    try {
+        const { email, password, username } = userSignUpSchema.parse(credentials);
         const passwordHashed = await hash(password, 10);
 
         const existingUsername = await prisma.user.findFirst({
@@ -18,7 +18,7 @@ export const signUp = async (
                 username: username,
             }
         });
-        if(existingUsername){
+        if (existingUsername) {
             return {
                 error: "Username already in use, please choose another.",
             }
@@ -29,7 +29,7 @@ export const signUp = async (
                 email: email,
             }
         })
-        if(existingEmail){
+        if (existingEmail) {
             return {
                 error: "Email already in use, please choose another.",
             }
@@ -49,29 +49,29 @@ export const signUp = async (
                 expiresAt: new Date(Date.now() + 30 * 24 * 60 * 1000),
             }
         })
-        
+
         const maxAge = 60 * 60 * 24;
         cookies().set('sessionId', session.id.toString(), {
-            maxAge, 
+            maxAge,
             path: '/',
             httpOnly: true,
-            secure: true, 
+            secure: true,
         });
 
         return redirect('');
-        
+
     } catch (error) {
         console.error(error)
     }
 }
 
-export const signIn = async ( 
+export const signIn = async (
     credentials: SignInValues
 ) => {
 
     try {
-        
-        const { password, username} = userSignInSchema.parse(credentials);
+
+        const { password, username } = userSignInSchema.parse(credentials);
 
         const existingUser = await prisma.user.findFirst({
             where: {
@@ -80,12 +80,12 @@ export const signIn = async (
                 ]
             }
         })
-        if(!existingUser || !existingUser.password)
-            return { error: "Incorrect username or password"}
+        if (!existingUser || !existingUser.password)
+            return { error: "Incorrect username or password" }
 
         // const invalidPassword = await compare(existingUser.password, password);
-        if(existingUser.password !== password)
-            return { error: "Incorrect password"}
+        if (existingUser.password !== password)
+            return { error: "Incorrect password" }
 
         const session = await prisma.session.create({
             data: {
@@ -96,33 +96,33 @@ export const signIn = async (
 
         const maxAge = 60 * 60 * 24;
         cookies().set('sessionId', session.id.toString(), {
-            maxAge, 
+            maxAge,
             path: '/',
             httpOnly: true,
             // secure: true, 
-          });
+        });
 
         // return redirect('');
 
     } catch (error) {
-        console.error(error);   
+        console.error(error);
     }
 }
 
 export const SignOut = async () => {
     const maxAge = 60 * 60 * 24;
     cookies().set('sessionId', "0", {
-        maxAge, 
+        maxAge,
         path: '/',
         httpOnly: true,
-        secure: true, 
-      });
+        secure: true,
+    });
     cookies().delete("sessionId");
     /**
      * @TODO perhaps it has to be removed permanently.
      */
     return redirect("/");
-    
+
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -144,14 +144,14 @@ export const validateSession = async (sessionAuth?: any) => {
 
     try {
         // IN CASE OF THE USER IS NOT CREATED ALREADY
-        if(sessionAuth){
+        if (sessionAuth) {
             const user = await prisma.user.findFirst({
-                where: 
+                where:
                 {
                     email: sessionAuth?.user?.email?.toString()
                 }
             })
-            if(!user){
+            if (!user) {
                 const newUser = await prisma.user.create({
                     data: {
                         email: String(sessionAuth.user?.email?.toString()),
@@ -159,28 +159,28 @@ export const validateSession = async (sessionAuth?: any) => {
                         username: String(sessionAuth.user?.name),
                     }
                 })
-                
-                const session = await prisma.session.create({
+
+                await prisma.session.create({
                     data: {
                         expiresAt: new Date(Date.now() + 30 * 24 * 60 * 1000),
                         userId: newUser.id,
                     }
                 })
-                
-                return {newUser , session};
+
+                return newUser;
             }
 
         }
 
-        if(sessionId){
+        if (sessionId) {
 
             const session = await prisma.session.findFirst({
-                where:    
+                where:
                 {
                     id: sessionId,
                 }
             })
-    
+            console.log("found session: " + session?.id)
 
             const user = await prisma.user.findFirst({
                 where: {
@@ -194,11 +194,11 @@ export const validateSession = async (sessionAuth?: any) => {
                     ]
                 }
             })
-            
-            return {user, session};
+            console.log("found user: " + user?.email)
+
+            return user;
         }
 
-        
     } catch (error) {
         console.error(error);
     }
