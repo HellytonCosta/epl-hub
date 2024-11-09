@@ -4,19 +4,22 @@ import { validateSession } from "@/constants/actions/user.action";
 import { editProfileSchema } from "@/schemas/profile";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSession } from "next-auth/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const Page = () => {
   const { data } = useSession();
-  // const [errors, setErrors] = useState();
-  // const [success, setSuccess] = useState();
+
+  const [error, setError] = useState();
+  const [success, setSuccess] = useState();
+
   useEffect(() => {
     const fetchSessionData = async () => {
       const session = await validateSession(data?.user);
 
       if (session) {
+        // Setting the values for the profile
         if (session.email) setValue("email", String(session.email));
         if (session.name) setValue("name", String(session.name));
         if (session.username) setValue("name", String(session.username));
@@ -24,7 +27,10 @@ const Page = () => {
         if (session.favTeam) setValue("name", String(session.favTeam));
       }
       console.log(session);
+
+   
     };
+
     if (data) {
       setValue("email", String(data?.user?.email));
       setValue("name", String(data?.user?.name));
@@ -43,8 +49,9 @@ const Page = () => {
 
   const onSubmit = async (data: z.infer<typeof editProfileSchema>) => {
     console.log(data);
-
+    // Call the function to update the profile
   };
+   
   return (
     <section className="bg-black/50 min-h-screen content-center">
       <div className="mx-auto max-w-sm rounded-md bg-white p-4 text-black">
@@ -98,10 +105,12 @@ const Page = () => {
               >
                 EDIT PROFILE
               </button>
-              {/* {error && <p>{error}</p>}
-              {success && <p>{success}</p>} */}
+              {error && <p>{error}</p>}
+              {success && <p>{success}</p>}
               {isSubmitSuccessful && (
-                <p className="text-green-600 text-center">Your data was successfully updated!</p>
+                <p className="text-green-600 text-center">
+                  Your data was successfully updated!
+                </p>
               )}
             </form>
           </div>

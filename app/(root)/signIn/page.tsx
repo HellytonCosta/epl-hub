@@ -7,17 +7,20 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useSession, signIn as SignIn } from "next-auth/react";
-
+import { redirect } from "next/navigation";
 
 // eslint-disable-next-line @next/next/no-async-client-component
 const Page = () => {
   const { data } = useSession();
-  // validating data
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [authSession, setAuthSession] = useState<any>();
-  
-  if(data) {
+  // Used in the case the Session wants to update unlimited times
+  const [auxOnce, setAuxOnce] = useState<boolean>();
+
+  if (data && (auxOnce === false)) {
     setAuthSession(data);
+    setAuxOnce(true);
   }
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
@@ -41,25 +44,30 @@ const Page = () => {
   useEffect(() => {
     const fetchSession = async () => {
       const session = await validateSession(authSession);
-      console.log(data);
-      return session;
-    }
+      console.log("Session Data: \n" + session);
+      // return session;
+    };
 
     fetchSession();
-  }, [])
+  }, []);
 
+  if (data !== null) {
+    console.log(data + "\n Aqui estão os dados de sessão");
+    return redirect('/');
+  }
   return (
     <section className="bg-black/50 h-screen content-center px-10 ">
       <div className="bg-white/80 max-w-xl min-h-96 mx-auto text-black rounded-md p-10 space-y-2">
         <div className="mb-4">
           <h1 className="text-3xl font-semibold font-lato text-center">
-            Welcome back! {data?.user?.email}
+            Welcome back!
+            {/* {data?.user?.email} */}
           </h1>
           <p className="text-center">Enter your credentials to sign in.</p>
         </div>
 
         <button
-          className="flex gap-2 bg-premier text-white py-2 mx-auto w-full max-w-72 rounded-md justify-center "
+          className="hidden gap-2 bg-premier text-white py-2 mx-auto w-full max-w-72 rounded-md justify-center "
           // onClick={() => SignIn("github")}
         >
           <Mail />

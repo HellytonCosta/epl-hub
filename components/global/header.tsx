@@ -27,7 +27,7 @@ const Header = () => {
 
   return (
     <header className="min-h-10 font-lato bg-premier px-10 py-4">
-      <div className="flex justify-center gap-1 items-center max-w-[1400px] mx-auto">
+      <div className="flex justify-center gap-1 items-center max-w-[1400px] mx-auto max-lg:gap-10">
         <Link href={"/"} className="flex-none">
           <div className="flex max-lg:justify-center gap-4 items-center">
             <Image alt="" src={"/logos/trophy-1.svg"} width={30} height={30} />
@@ -49,7 +49,7 @@ const Header = () => {
             </Link>
           </ul>
         </div>
-        <div className="flex-none text-end max-lg:hidden">
+        <div className="flex-none text-end max-md:hidden">
           {!session && !sessionAuth && (
             <div className="flex gap-2">
               <Link href={"/signIn"}>Sign In</Link>

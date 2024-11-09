@@ -3,19 +3,24 @@ import Matches from "@/components/standings/Matches";
 import StandingsTable from "@/components/standings/StandingsTable";
 import TopScorers from "@/components/standings/TopScorers";
 import { validateSession } from "@/constants/actions/user.action";
+import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 
 export default function Home() {
+  const { data } = useSession();
+
+  console.log("data expires: \n" + data?.expires);
+  console.log("data user: \n" + data?.user?.email);
 
   useEffect(() => {
     const fetchSession = async () => {
-      const session = await validateSession()
+      const session = await validateSession(data?.user);
 
       console.log(session);
     }
 
     fetchSession();
-  }, [])
+  }, [data?.user])
 
   return (
     <div className="p-10 bg-opacity-30 bg-black">

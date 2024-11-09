@@ -131,9 +131,8 @@ export const validateSession = async (sessionAuth?: any) => {
     // const sessionAuth = await getServerSession(options);
 
     // const authSessionToken = cookies().get('next-auth.session-token')
-    console.log(sessionId);
+    // console.log(sessionId);
     console.log("next auth session: " + sessionAuth)
-
 
     /**
      * @TODO 1 - when you call the method, pull both sessions OK 
@@ -152,22 +151,25 @@ export const validateSession = async (sessionAuth?: any) => {
                 }
             })
             if (!user) {
-                const newUser = await prisma.user.create({
-                    data: {
-                        email: String(sessionAuth.user?.email?.toString()),
-                        password: "",
-                        username: String(sessionAuth.user?.name),
-                    }
-                })
+                console.log("Email do cidadao: " + sessionAuth.user.email);
+                if (sessionAuth.user.email !== null) {
 
-                await prisma.session.create({
-                    data: {
-                        expiresAt: new Date(Date.now() + 30 * 24 * 60 * 1000),
-                        userId: newUser.id,
-                    }
-                })
+                    const newUser = await prisma.user.create({
+                        data: {
+                            email: String(sessionAuth.user?.email?.toString()),
+                            password: "",
+                            username: String(sessionAuth.user?.name),
+                        }
+                    })
 
-                return newUser;
+                    await prisma.session.create({
+                        data: {
+                            expiresAt: new Date(Date.now() + 30 * 24 * 60 * 1000),
+                            userId: newUser.id,
+                        }
+                    })
+                    return newUser;
+                }
             }
 
         }
@@ -202,8 +204,4 @@ export const validateSession = async (sessionAuth?: any) => {
     } catch (error) {
         console.error(error);
     }
-}
-
-export const validatePage = async () => {
-
 }
