@@ -1,0 +1,8 @@
+{
+    "entryPoints": ["src", "pages", "components", "lib"],
+    "out": "docs",
+    "includeVersion": true,
+    "exclude": ["**/*.test.ts", "**/*.spec.ts", "**/node_modules/**"],
+    "theme": "default",
+    "tsconfig": "./tsconfig.json"
+}

@@ -4,6 +4,7 @@ import { validateSession } from "@/constants/actions/user.action";
 import { editProfileSchema } from "@/schemas/profile";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -11,8 +12,8 @@ import { z } from "zod";
 const Page = () => {
   const { data } = useSession();
 
-  const [error, setError] = useState();
-  const [success, setSuccess] = useState();
+  const [error] = useState();
+  const [success] = useState();
 
   useEffect(() => {
     const fetchSessionData = async () => {
@@ -51,7 +52,9 @@ const Page = () => {
     console.log(data);
     // Call the function to update the profile
   };
-   
+
+  if(data === null) return redirect("/");
+  
   return (
     <section className="bg-black/50 min-h-screen content-center">
       <div className="mx-auto max-w-sm rounded-md bg-white p-4 text-black">

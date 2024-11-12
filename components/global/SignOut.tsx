@@ -1,24 +1,32 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SignOut } from "@/constants/actions/user.action";
 import { useSession, signOut } from "next-auth/react";
 
-
 const SignOutButton = () => {
-  const { data } = useSession();
+  const [flagOnce, setFlagOnce] = useState<boolean>(false);
 
+  const { data } = useSession();
+  // IMPLEMENT AN USEFFECT HERE...
+  useEffect(() => {
+
+    
+  }, [])
   const handleSignOut = async () => {
     const testing = await SignOut();
     console.log(testing);
     if (data) {
       try {
-        signOut();
+        if (flagOnce === false) {
+          signOut();
+          setFlagOnce(true);
+        }
       } catch (error) {
         console.error(error);
       }
-
     }
+    
   };
 
   return (

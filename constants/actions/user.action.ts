@@ -118,10 +118,8 @@ export const SignOut = async () => {
         secure: true,
     });
     cookies().delete("sessionId");
-    /**
-     * @TODO perhaps it has to be removed permanently.
-     */
-    return redirect("/");
+
+    // return redirect("/");
 
 }
 
